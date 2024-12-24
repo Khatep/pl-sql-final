@@ -170,8 +170,17 @@ EXCEPTION
         RETURN 'Error occurred during supply request creation: ' || SQLERRM;
 END check_and_create_supply_request;
 
+-- View existing supply requests before testing
+SELECT * FROM supply_requests;
 
+DECLARE
+    result VARCHAR2(200); -- Variable to store function result
+BEGIN
+    -- Execute the function
+    result := check_and_create_supply_request;
+    DBMS_OUTPUT.PUT_LINE(result); -- Output result
+END;
+/
 
-
-
-
+-- Check newly created supply requests
+SELECT * FROM supply_requests;
