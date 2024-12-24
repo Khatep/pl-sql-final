@@ -3,46 +3,29 @@ CREATE OR REPLACE TRIGGER check_expiration_date
 BEFORE INSERT OR UPDATE ON products
 FOR EACH ROW
 BEGIN
+    -- Validate expiration date
     IF :NEW.expiration_date <= SYSDATE THEN
         RAISE_APPLICATION_ERROR(-20001, 'Expiration date must be in the future.');
     END IF;
-
-EXCEPTION
-    -- Error handling during check
-    WHEN OTHERS THEN
-        -- If an error occurs, we roll back the transaction and display an error message.
-        ROLLBACK;
-        RAISE_APPLICATION_ERROR(-20002, 'Error in checking expiration date:' || SQLERRM);
 END check_expiration_date;
 /
+
 
 -- 2
 CREATE OR REPLACE TRIGGER trg_update_sale_price
 BEFORE INSERT ON products
 FOR EACH ROW
-DECLARE
-    -- Variables for storing values from the inserted row
-    new_vendor_price NUMBER;
 BEGIN
-    -- Extract the supplier's price from the new product
-    new_vendor_price := :NEW.vendor_price;
-    
-    -- Check if the supplier's price is negative or NULL
-    IF new_vendor_price IS NULL OR new_vendor_price < 0 THEN
+    -- Validate vendor price
+    IF :NEW.vendor_price IS NULL OR :NEW.vendor_price < 0 THEN
         RAISE_APPLICATION_ERROR(-20001, 'Incorrect vendor price (NULL or negative price).');
     END IF;
 
-    -- We calculate the sale price with a margin of 20%
-    :NEW.sale_price := new_vendor_price * 1.2;
-
-EXCEPTION
-    -- Error handling during calculations or insertion
-    WHEN OTHERS THEN
-        -- If an error occurs, we roll back the transaction and display an error message.
-        ROLLBACK;
-        RAISE_APPLICATION_ERROR(-20002, 'Error in calculating the sale price:' || SQLERRM);
+    -- Calculate sale price with a 20% margin
+    :NEW.sale_price := :NEW.vendor_price * 1.2;
 END trg_update_sale_price;
 /
+
 
 -- 3
 CREATE OR REPLACE TRIGGER trg_check_salary
@@ -52,25 +35,20 @@ DECLARE
     v_min_salary positions.min_salary%TYPE;
     v_max_salary positions.max_salary%TYPE;
 BEGIN
-    -- Fetch the salary range for the provided position_id
+    -- Fetch salary range for the position
     SELECT min_salary, max_salary
     INTO v_min_salary, v_max_salary
     FROM positions
     WHERE id = :NEW.position_id;
 
-    -- Check if the salary is within the valid range
+    -- Validate salary range
     IF :NEW.salary < v_min_salary OR :NEW.salary > v_max_salary THEN
-        RAISE_APPLICATION_ERROR(-20001, 'Salary out of bounds for the position. Allowed range: '  || v_min_salary || ' to ' || v_max_salary);
+        RAISE_APPLICATION_ERROR(-20001, 'Salary out of bounds for the position. Allowed range: '  
+                                  || v_min_salary || ' to ' || v_max_salary);
     END IF;
-
-EXCEPTION
-    -- Error handling during check salary
-    WHEN OTHERS THEN
-        -- If an error occurs, we roll back the transaction and display an error message.
-        ROLLBACK;
-        RAISE_APPLICATION_ERROR(-20002, 'Error in checking salary:' || SQLERRM);
 END trg_check_salary;
 /
+
 
 -- 4
 CREATE OR REPLACE TRIGGER trg_validate_discount  
@@ -79,27 +57,23 @@ FOR EACH ROW
 DECLARE  
     product_exists NUMBER;  
 BEGIN  
+    -- Validate discount percentage
     IF :NEW.percentage > 70 THEN  
-        RAISE_APPLICATION_ERROR(-20003, 'Error: Discount can not be higher than 70%');  
+        RAISE_APPLICATION_ERROR(-20003, 'Error: Discount cannot be higher than 70%');  
     END IF;  
   
+    -- Validate discount end date
     IF :NEW.end_date < SYSDATE THEN  
-        RAISE_APPLICATION_ERROR(-20004, 'Error: End date of discount can not be in past.');  
+        RAISE_APPLICATION_ERROR(-20004, 'Error: End date of discount cannot be in the past.');  
     END IF;  
   
+    -- Check if the product exists
     SELECT COUNT(*) INTO product_exists  
     FROM products  
     WHERE id = :NEW.product_id;  
   
     IF product_exists = 0 THEN  
-        RAISE_APPLICATION_ERROR(-20005, 'Error: There is no product with such id.');  
+        RAISE_APPLICATION_ERROR(-20005, 'Error: There is no product with such ID.');  
     END IF;  
-
-EXCEPTION
-    -- Error handling during validate discount
-    WHEN OTHERS THEN
-        -- If an error occurs, we roll back the transaction and display an error message.
-        ROLLBACK;
-        RAISE_APPLICATION_ERROR(-20002, 'Error in validate salary:' || SQLERRM);
 END trg_validate_discount;
 /
