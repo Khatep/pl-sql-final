@@ -62,7 +62,7 @@ END show_total_product_sales;
 
 
 BEGIN
-    show_total_sales;
+    show_total_product_sales;
 END;
 /
 
