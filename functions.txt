@@ -138,6 +138,37 @@ END;
 /
 
 -- 5
+CREATE OR REPLACE FUNCTION check_and_create_supply_request
+RETURN VARCHAR2
+IS
+    v_count_in_stock INT;
+    v_product_id INT;
+    v_store_id INT;
+    v_vendor_id INT;
+BEGIN
+    -- Loop through all records in the stories_products table
+    FOR rec IN (SELECT sp.id, sp.count_in_stock, sp.product_id, sp.store_id, p.vendor_id
+                FROM stores_products sp
+                JOIN products p ON sp.product_id = p.id
+                WHERE sp.count_in_stock < 100)
+    LOOP
+        -- Getting the data to create an entry in supply_requests
+        v_count_in_stock := rec.count_in_stock;
+        v_product_id := rec.product_id;
+        v_store_id := rec.store_id;
+        v_vendor_id := rec.vendor_id;
+
+        -- Insert an entry in supply_requests
+        INSERT INTO supply_requests (created_date, product_count, stores_products_id, vendor_id)
+        VALUES (SYSDATE, 100 - v_count_in_stock, rec.id, v_vendor_id);
+    END LOOP;
+    
+    RETURN 'Supply requests have been created for low stock products.';
+EXCEPTION
+    WHEN OTHERS THEN
+        -- Error handling
+        RETURN 'Error occurred during supply request creation: ' || SQLERRM;
+END check_and_create_supply_request;
 
 
 

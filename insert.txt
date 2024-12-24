@@ -438,25 +438,3 @@ INSERT INTO stores_products (id, store_id, product_id, count_in_stock)
 VALUES (19, 9, 11, 200);
 INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
 VALUES (20, 10, 14, 100);
-
--- Таблица supply_requests
-INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
-VALUES (1, TO_DATE('2024-12-13', 'YYYY-MM-DD'), 150, 1, 1);
-INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
-VALUES (2, TO_DATE('2024-12-14', 'YYYY-MM-DD'), 250, 2, 2);
-INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
-VALUES (3, TO_DATE('2024-12-15', 'YYYY-MM-DD'), 300, 3, 3);
-INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
-VALUES (4, TO_DATE('2024-12-16', 'YYYY-MM-DD'), 100, 4, 4);
-INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
-VALUES (5, TO_DATE('2024-12-17', 'YYYY-MM-DD'), 350, 5, 5);
-INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
-VALUES (6, TO_DATE('2024-12-18', 'YYYY-MM-DD'), 200, 6, 6);
-INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
-VALUES (7, TO_DATE('2024-12-19', 'YYYY-MM-DD'), 100, 7, 7);
-INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
-VALUES (8, TO_DATE('2024-12-20', 'YYYY-MM-DD'), 150, 8, 8);
-INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
-VALUES (9, TO_DATE('2024-12-21', 'YYYY-MM-DD'), 200, 9, 9);
-INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
-VALUES (10, TO_DATE('2024-12-22', 'YYYY-MM-DD'), 150, 10, 10);

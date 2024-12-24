@@ -168,10 +168,10 @@ CREATE TABLE stores_products --17
 
 CREATE TABLE supply_requests --18
 (
-    id INT PRIMARY KEY,
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     created_date DATE NOT NULL,
     product_count INT NOT NULL,
-    stores_products_id INT, 
+    stores_products_id INT,
     vendor_id INT,
     CONSTRAINT fk_stores_products_supply_requests FOREIGN KEY (stores_products_id) REFERENCES stores_products(id),
     CONSTRAINT fk_supply_requests_vendor FOREIGN KEY (vendor_id) REFERENCES vendors(id)
