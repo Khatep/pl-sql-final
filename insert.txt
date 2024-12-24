@@ -1,0 +1,462 @@
+-- Таблица categories (Категории товаров)
+INSERT INTO categories (id, name) 
+VALUES (1, 'Dairy Products');
+INSERT INTO categories (id, name) 
+VALUES (2, 'Fruits/Vegetables');
+INSERT INTO categories (id, name) 
+VALUES (3, 'Grains');
+INSERT INTO categories (id, name) 
+VALUES (4, 'Canned Goods');
+INSERT INTO categories (id, name)  
+VALUES (5, 'Drinks');
+INSERT INTO categories (id, name) 
+VALUES (6, 'Baked Goods');
+INSERT INTO categories (id, name)  
+VALUES (7, 'Alcohol');
+INSERT INTO categories (id, name) 
+VALUES (8, 'Sweets');
+INSERT INTO categories (id, name) 
+VALUES (9, 'Household Products');
+INSERT INTO categories (id, name) 
+VALUES (10, 'Meat products');
+INSERT INTO categories (id, name) 
+VALUES (11, 'Frozen products');
+
+-- Таблица vendors (Поставщики)
+INSERT INTO vendors (id, name, email, phone_number, bank_account, bin) 
+VALUES (1, 'DairyCo', 'contact@dairyco.com', '+75000000001', '123456789', 'BIN123456');
+INSERT INTO vendors (id, name, email, phone_number, bank_account, bin) 
+VALUES (2, 'FruitWorld', 'info@fruitworld.com', '75000000002', '987654321', 'BIN987654');
+INSERT INTO vendors (id, name, email, phone_number, bank_account, bin)  
+VALUES (3, 'GrainSupplies', 'sales@grainsupplies.com', '75000000003', '654321987', 'BIN654321');
+INSERT INTO vendors (id, name, email, phone_number, bank_account, bin) 
+VALUES (4, 'CannedGoodsLtd', 'support@cannedgoods.com', '75000000004', '321098765', 'BIN321098');
+INSERT INTO vendors (id, name, email, phone_number, bank_account, bin)  
+VALUES (5, 'JuiceFactory', 'contact@juicefactory.com', '75000000005', '555123456', 'BIN555123');
+INSERT INTO vendors (id, name, email, phone_number, bank_account, bin)  
+VALUES (6, 'BakeMaster', 'info@bakemaster.com', '75000000006', '444567890', 'BIN444567');
+INSERT INTO vendors (id, name, email, phone_number, bank_account, bin)  
+VALUES (7, 'WineProducers', 'sales@wineproducers.com', '75000000007', '333098765', 'BIN333098');
+INSERT INTO vendors (id, name, email, phone_number, bank_account, bin)  
+VALUES (8, 'SweetTreats', 'info@sweettreats.com', '75000000008', '222765432', 'BIN222765');
+INSERT INTO vendors (id, name, email, phone_number, bank_account, bin)  
+VALUES (9, 'HouseholdGoodsCo', 'support@householdgoods.com', '75000000009', '111456789', 'BIN111456');
+INSERT INTO vendors (id, name, email, phone_number, bank_account, bin) 
+VALUES (10, 'FarmFresh', 'contact@farmfresh.com', '75000000010', '666654987', 'BIN666654');
+
+-- Таблица manufacturers (Производители)
+INSERT INTO manufacturers (id, name, country) 
+VALUES (1, 'Dairy Inc.', 'Kazakhstan');
+INSERT INTO manufacturers (id, name, country)  
+VALUES (2, 'Fruit Ltd.', 'Canada');
+INSERT INTO manufacturers (id, name, country)  
+VALUES (3, 'GrainCorp', 'Russia');
+INSERT INTO manufacturers (id, name, country)  
+VALUES (4, 'CannedGoods Intl.', 'Germany');
+INSERT INTO manufacturers (id, name, country)  
+VALUES (5, 'JuiceCo', 'Uzbekstan');
+INSERT INTO manufacturers (id, name, country)  
+VALUES (6, 'Bakehouse', 'UK');
+INSERT INTO manufacturers (id, name, country)  
+VALUES (7, 'WineMakers', 'Italy');
+INSERT INTO manufacturers (id, name, country)  
+VALUES (8, 'ChocoFactory', 'Belgium');
+INSERT INTO manufacturers (id, name, country)  
+VALUES (9, 'CleanHouse Inc.', 'USA');
+INSERT INTO manufacturers (id, name, country)  
+VALUES (10, 'FarmFresh Produce', 'Mexico');
+
+
+-- Таблица products (Товары)
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (1, 1, 'Milk 1L', 'Whole milk', 700, 1, TO_DATE('2025-01-15', 'YYYY-MM-DD'), 80, 520, 1, 1);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (2, 2, 'Apples', 'Fresh green apples', 800, 1, TO_DATE('2025-01-01', 'YYYY-MM-DD'), 210, 500, 2, 2);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (3, 3, 'Rice 1kg', 'Long-grain rice', 750, 1, TO_DATE('2026-01-01', 'YYYY-MM-DD'), 120, 450, 3, 3);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (4, 4, 'Canned Tuna', 'Tuna in oil', 1200, 0.25, TO_DATE('2026-02-15', 'YYYY-MM-DD'), 40, 800, 4, 4);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (5, 5, 'Orange Juice 1L', 'Fresh orange juice', 900, 1, TO_DATE('2025-08-20', 'YYYY-MM-DD'), 250, 600, 5, 5);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (6, 6, 'Bread', 'Freshly baked bread', 250, 0.5, TO_DATE('2025-02-15', 'YYYY-MM-DD'), 60, 180, 6, 6);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (7, 7, 'Red Wine 750ml', 'Premium red wine', 9500, 0.75, TO_DATE('2045-01-01', 'YYYY-MM-DD'), 30, 7200, 7, 7);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (8, 8, 'Chocolate Bar', 'Dark chocolate', 450, 0.1, TO_DATE('2025-12-31', 'YYYY-MM-DD'), 200, 220, 8, 8);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (9, 9, 'Laundry Detergent', '1kg powder', 2500, 0.1, TO_DATE('2027-01-01', 'YYYY-MM-DD'), 90, 1600, 9, 9);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (10, 2, 'Tomatoes', 'Fresh tomatoes', 750, 1, TO_DATE('2025-01-01', 'YYYY-MM-DD'), 90, 520, 2, 2);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (11, 10, 'Beef Steak', 'Piece of beef meat', 4200, 1, TO_DATE('2025-01-01', 'YYYY-MM-DD'), 40, 3000, 10, 10);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (12, 11, 'Frozen nuggets', 'Frozen chicken nuggets, 1.5 kg', 3100, 1.5, TO_DATE('2025-02-01', 'YYYY-MM-DD'), 50, 2300, 10, 10);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (13, 9, 'Shampoo', 'Mint shampoo for men', 1500, 1, TO_DATE('2026-01-01', 'YYYY-MM-DD'), 120, 800, 9, 9);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (14, 10, 'Chicken breast', 'Chicken breast meat', 2600, 1, TO_DATE('2026-01-01', 'YYYY-MM-DD'), 90, 1900, 10, 10);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (15, 9, 'Dishwashing detergent', 'Dishwashing detergent', 1700, 0.8, TO_DATE('2026-01-01', 'YYYY-MM-DD'), 70, 1100, 9, 9);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (16, 6, 'Chocolate cookies', 'Cookies with cholocate chips', 2400, 1, TO_DATE('2025-01-01', 'YYYY-MM-DD'), 45, 1600, 6, 6);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (17, 4, 'Sour cream', 'Canned sour cream', 1200, 0.5, TO_DATE('2026-01-01', 'YYYY-MM-DD'), 50, 780, 4, 4);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (18, 10, 'Beef sausages', 'Beef sausages', 2100, 0.8, TO_DATE('2025-02-01', 'YYYY-MM-DD'), 40, 1300, 10, 10);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (19, 8, 'Oreo cookies', 'Oreo cookies', 900, 0.4, TO_DATE('2026-01-01', 'YYYY-MM-DD'), 80, 500, 8, 8);
+INSERT INTO products (id, category_id, name, description, sale_price, weight, expiration_date, count_in_stock, vendor_price, vendor_id, manufacturer_id) 
+VALUES (20, 7, 'Champagne', 'Premium champagne, 12%', 12450, 1, TO_DATE('2045-01-01', 'YYYY-MM-DD'), 30, 8200, 7, 7);
+
+-- Таблица store_types
+INSERT INTO store_types(id, name) VALUES (1, 'Supermarket');
+INSERT INTO store_types(id, name) VALUES (2, 'Grocery store');
+INSERT INTO store_types(id, name) VALUES (3, 'Mall store');
+INSERT INTO store_types(id, name) VALUES (4, 'Gas station store');
+INSERT INTO store_types(id, name) VALUES (5, 'Alcomarket');
+
+
+-- Таблица stores
+INSERT INTO stores (id, address, quantity_of_employers, phone_number, store_type_id) 
+VALUES (1, '123 Abaya St', 15, '+77632875554', 1);
+INSERT INTO stores (id, address, quantity_of_employers, phone_number, store_type_id) 
+VALUES (2, '456 Zheltoksan St', 15, '+7796921496', 1);
+INSERT INTO stores (id, address, quantity_of_employers, phone_number, store_type_id) 
+VALUES (3, '789 Tole Bi St', 10, '+77317233678', 2);
+INSERT INTO stores (id, address, quantity_of_employers, phone_number, store_type_id) 
+VALUES (4, '101 Mynbaeva St', 10, '+7701884349', 2);
+INSERT INTO stores (id, address, quantity_of_employers, phone_number, store_type_id) 
+VALUES (5, '202 Rozybakieva St', 8, '+77366877841', 3);
+INSERT INTO stores (id, address, quantity_of_employers, phone_number, store_type_id) 
+VALUES (6, '303 Satpayeva St', 8, '+7758813582', 3);
+INSERT INTO stores (id, address, quantity_of_employers, phone_number, store_type_id) 
+VALUES (7, '404 Lomonosova St', 3, '+779378225168', 4);
+INSERT INTO stores (id, address, quantity_of_employers, phone_number, store_type_id) 
+VALUES (8, '505 Ghandi St', 3, '+772160449507', 4);
+INSERT INTO stores (id, address, quantity_of_employers, phone_number, store_type_id) 
+VALUES (9, '606 Manasa St', 5, '+77990822850', 5);
+INSERT INTO stores (id, address, quantity_of_employers, phone_number, store_type_id) 
+VALUES (10, '707 Zhubanova St', 5, '+77728441262', 5);
+
+-- Таблица positions
+INSERT INTO positions(id, name, min_salary, max_salary)
+VALUES(1, 'Cashier', 160000, 230000);
+INSERT INTO positions(id, name, min_salary, max_salary)
+VALUES(2, 'Custodian', 130000, 200000);
+INSERT INTO positions(id, name, min_salary, max_salary)
+VALUES(3, 'Food preparation worker', 160000, 220000);
+INSERT INTO positions(id, name, min_salary, max_salary)
+VALUES(4, 'Stock clerk', 120000, 200000);
+INSERT INTO positions(id, name, min_salary, max_salary)
+VALUES(5, 'Butcher', 180000, 250000);
+INSERT INTO positions(id, name, min_salary, max_salary)
+VALUES(6, 'Baker', 180000, 260000);
+INSERT INTO positions(id, name, min_salary, max_salary)
+VALUES(7, 'Security guard', 120000, 200000);
+INSERT INTO positions(id, name, min_salary, max_salary)
+VALUES(8, 'Courier', 120000, 200000);
+INSERT INTO positions(id, name, min_salary, max_salary)
+VALUES(9, 'Cleaner', 120000, 200000);
+INSERT INTO positions(id, name, min_salary, max_salary)
+VALUES(10, 'Store manager', 200000, 320000);
+
+-- Таблица employees
+INSERT INTO employees (id, first_name, last_name, position_id, salary, phone_number, email, store_id) 
+VALUES (1, 'Amirlan', 'Zhasulanov', 7, 180000, '+77000000001', 'amirlan.z@mail.com', 1);
+INSERT INTO employees (id, first_name, last_name,  position_id, salary, phone_number, email, store_id)  
+VALUES (2, 'Daulet', 'Karimov', 4, 150000 ,'77000000002', 'karimov.d@mail.com', 2);
+INSERT INTO employees (id, first_name, last_name,  position_id, salary, phone_number, email, store_id)  
+VALUES (3, 'Oleg', 'Sokolov', 5, 220000,'77000000003', 'oleg.sokolov@mail.com', 3);
+INSERT INTO employees (id, first_name, last_name,  position_id, salary, phone_number, email, store_id) 
+VALUES (4, 'Marat', 'Zhenisov', 10, 260000, '77000000004', 'zh.marat@mail.com', 4);
+INSERT INTO employees (id, first_name, last_name,  position_id, salary, phone_number, email, store_id)  
+VALUES (5, 'Ayaulim', 'Nurlanova', 1, 180000, '77000000005', 'nurlanova.a@mail.com', 5);
+INSERT INTO employees (id, first_name, last_name,  position_id, salary, phone_number, email, store_id) 
+VALUES (6, 'Nurgali', 'Khatep', 2, 180000,'77000000006', 'nurgali.k@mail.com', 6);
+INSERT INTO employees (id, first_name, last_name,  position_id, salary, phone_number, email, store_id)  
+VALUES (7, 'Kristina', 'Startseva', 3, 190000,'77000000007', 'kristina.s@mail.com', 7);
+INSERT INTO employees (id, first_name, last_name,  position_id, salary, phone_number, email, store_id)  
+VALUES (8, 'Ruslan', 'Maratov', 9, 160000, '77000000008', 'ruslan.m@mail.com', 8);
+INSERT INTO employees (id, first_name, last_name,  position_id, salary, phone_number, email, store_id)  
+VALUES (9, 'Olga', 'Mikhailova', 6, 250000, '77000000009', 'olga.m@mail.com', 9);
+INSERT INTO employees (id, first_name, last_name,  position_id, salary, phone_number, email, store_id) 
+VALUES (10, 'Danil', 'Yakovlev', 1, 180000, '77000000010', 'danil.y@mail.com', 10);
+INSERT INTO employees (id, first_name, last_name,  position_id, salary, phone_number, email, store_id) 
+VALUES (11, 'Daniil', 'Musin', 8, 190000, '+77000000011', 'daniil.m@mail.com', 1);
+INSERT INTO employees (id, first_name, last_name,  position_id, salary, phone_number, email, store_id)  
+VALUES (12, 'Abylai', 'Karimov', 8, 190000 ,'77000000012', 'abylai.k@mail.com', 2);
+INSERT INTO employees (id, first_name, last_name,  position_id, salary, phone_number, email, store_id)  
+VALUES (13, 'Anton', 'Sokolov', 8, 190000,'77000000013', 'anton.sokolov@mail.com', 3);
+INSERT INTO employees (id, first_name, last_name,  position_id, salary, phone_number, email, store_id) 
+VALUES (14, 'Marat', 'Alimov', 8, 190000, '77000000014', 'marat.alimov@mail.com', 4);
+INSERT INTO employees (id, first_name, last_name,  position_id, salary, phone_number, email, store_id)  
+VALUES (15, 'Nurlan', 'Nazarov', 8, 190000, '77000000015', 'nurlan.n@mail.com', 5);
+
+
+-- Таблица discounts
+INSERT INTO discounts (id, product_id, percentage, end_date) 
+VALUES (1, 1, 10, TO_DATE('2025-12-31', 'YYYY-MM-DD'));
+INSERT INTO discounts (id, product_id, percentage, end_date) 
+VALUES (2, 2, 15, TO_DATE('2025-01-15', 'YYYY-MM-DD'));
+INSERT INTO discounts (id, product_id, percentage, end_date) 
+VALUES (3, 3, 5, TO_DATE('2025-06-30', 'YYYY-MM-DD'));
+INSERT INTO discounts (id, product_id, percentage, end_date)  
+VALUES (4, 4, 20, TO_DATE('2025-12-31', 'YYYY-MM-DD'));
+INSERT INTO discounts (id, product_id, percentage, end_date)  
+VALUES (5, 5, 10, TO_DATE('2025-02-28', 'YYYY-MM-DD'));
+INSERT INTO discounts (id, product_id, percentage, end_date)  
+VALUES (6, 6, 15, TO_DATE('2025-03-15', 'YYYY-MM-DD'));
+INSERT INTO discounts (id, product_id, percentage, end_date) 
+VALUES (7, 7, 5, TO_DATE('2025-05-31', 'YYYY-MM-DD'));
+INSERT INTO discounts (id, product_id, percentage, end_date)  
+VALUES (8, 8, 10, TO_DATE('2025-12-31', 'YYYY-MM-DD'));
+INSERT INTO discounts (id, product_id, percentage, end_date)  
+VALUES (9, 9, 20, TO_DATE('2025-11-30', 'YYYY-MM-DD'));
+INSERT INTO discounts (id, product_id, percentage, end_date)  
+VALUES (10, 10, 5, TO_DATE('2025-07-31', 'YYYY-MM-DD'));
+
+-- Таблица supplies
+INSERT INTO supplies (id, date_of_supply, sum, vendor_id, store_id) 
+VALUES (1, TO_DATE('2025-01-15', 'YYYY-MM-DD'), 1500, 1, 1);
+INSERT INTO supplies (id, date_of_supply, sum, vendor_id, store_id) 
+VALUES (2, TO_DATE('2025-02-01', 'YYYY-MM-DD'), 1200, 2, 2);
+INSERT INTO supplies (id, date_of_supply, sum, vendor_id, store_id) 
+VALUES (3, TO_DATE('2025-03-10', 'YYYY-MM-DD'), 800, 3, 3);
+INSERT INTO supplies (id, date_of_supply, sum, vendor_id, store_id) 
+VALUES (4, TO_DATE('2025-04-05', 'YYYY-MM-DD'), 1000, 4, 4);
+INSERT INTO supplies (id, date_of_supply, sum, vendor_id, store_id) 
+VALUES (5, TO_DATE('2025-05-15', 'YYYY-MM-DD'), 2000, 5, 5);
+INSERT INTO supplies (id, date_of_supply, sum, vendor_id, store_id) 
+VALUES (6, TO_DATE('2025-06-01', 'YYYY-MM-DD'), 900, 6, 6);
+INSERT INTO supplies (id, date_of_supply, sum, vendor_id, store_id) 
+VALUES (7, TO_DATE('2025-07-20', 'YYYY-MM-DD'), 1100, 7, 7);
+INSERT INTO supplies (id, date_of_supply, sum, vendor_id, store_id) 
+VALUES (8, TO_DATE('2025-08-15', 'YYYY-MM-DD'), 1400, 8, 8);
+INSERT INTO supplies (id, date_of_supply, sum, vendor_id, store_id) 
+VALUES (9, TO_DATE('2025-09-10', 'YYYY-MM-DD'), 500, 9, 9);
+INSERT INTO supplies (id, date_of_supply, sum, vendor_id, store_id) 
+VALUES (10, TO_DATE('2025-10-05', 'YYYY-MM-DD'), 700, 10, 10);
+
+-- Таблица payment_methods
+INSERT INTO payment_methods(id, name) VALUES(1, 'Cash');
+INSERT INTO payment_methods(id, name) VALUES(2, 'Debt card');
+INSERT INTO payment_methods(id, name) VALUES(3, 'Credit card');
+INSERT INTO payment_methods(id, name) VALUES(4, 'Gift card');
+INSERT INTO payment_methods(id, name) VALUES(5, 'NFC');
+
+-- Таблица purchases
+INSERT INTO purchases (id, final_price, date_of_purchase, store_id, payment_method_id) 
+VALUES (1, 5600, TO_DATE('2024-10-05', 'YYYY-MM-DD'), 1, 1);
+INSERT INTO purchases (id, final_price, date_of_purchase, store_id, payment_method_id)
+VALUES (2, 2300, TO_DATE('2024-10-07', 'YYYY-MM-DD'), 2, 1);
+INSERT INTO purchases (id, final_price, date_of_purchase, store_id, payment_method_id) 
+VALUES (3, 5100, TO_DATE('2024-10-20', 'YYYY-MM-DD'), 3, 3);
+INSERT INTO purchases (id, final_price, date_of_purchase, store_id, payment_method_id) 
+VALUES (4, 12420, TO_DATE('2024-10-23', 'YYYY-MM-DD'), 4, 3);
+INSERT INTO purchases (id, final_price, date_of_purchase, store_id, payment_method_id) 
+VALUES (5, 4000, TO_DATE('2024-10-29', 'YYYY-MM-DD'), 5, 2);
+INSERT INTO purchases (id, final_price, date_of_purchase, store_id, payment_method_id) 
+VALUES (6, 3200, TO_DATE('2024-11-01', 'YYYY-MM-DD'), 6, 4);
+INSERT INTO purchases (id, final_price, date_of_purchase, store_id, payment_method_id) 
+VALUES (7, 5600, TO_DATE('2024-11-03', 'YYYY-MM-DD'), 7, 5);
+INSERT INTO purchases (id, final_price, date_of_purchase, store_id, payment_method_id) 
+VALUES (8, 6200, TO_DATE('2024-11-10', 'YYYY-MM-DD'), 8, 1);
+INSERT INTO purchases (id, final_price, date_of_purchase, store_id, payment_method_id) 
+VALUES (9, 1900, TO_DATE('2024-11-12', 'YYYY-MM-DD'), 9, 2);
+INSERT INTO purchases (id, final_price, date_of_purchase, store_id, payment_method_id) 
+VALUES (10, 15100, TO_DATE('2024-11-23', 'YYYY-MM-DD'), 10, 2);
+
+-- Таблица deliveries
+INSERT INTO deliveries (id, address, purchase_id, employee_id, cost) 
+VALUES (1, '123 Abay St', 1, 11, 1200);
+INSERT INTO deliveries (id, address, purchase_id, employee_id, cost) 
+VALUES (2, '456 Kulmanov St', 2, 12, 1200);
+INSERT INTO deliveries (id, address, purchase_id, employee_id, cost) 
+VALUES (3, '789 Gagarin St', 3, 13, 1400);
+INSERT INTO deliveries (id, address, purchase_id, employee_id, cost) 
+VALUES (4, '101 Lenin St', 4, 14, 1000);
+INSERT INTO deliveries (id, address, purchase_id, employee_id, cost) 
+VALUES (5, '202 Mynbayev St', 5, 15, 1500);
+INSERT INTO deliveries (id, address, purchase_id, employee_id, cost) 
+VALUES (6, '303 Lomonosov St', 6, 11, 1000);
+INSERT INTO deliveries (id, address, purchase_id, employee_id, cost) 
+VALUES (7, '404 Nazarbayev St', 7, 12, 1300);
+INSERT INTO deliveries (id, address, purchase_id, employee_id, cost) 
+VALUES (8, '505 Aimanov St', 8, 13, 1400);
+INSERT INTO deliveries (id, address, purchase_id, employee_id, cost) 
+VALUES (9, '606 Satpaev St', 9, 14, 1500);
+INSERT INTO deliveries (id, address, purchase_id, employee_id, cost) 
+VALUES (10, '707 Pushkin St', 10, 15, 1000);
+
+-- Таблица purchases_products
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (1, 1, 1, 3);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (2, 2, 2, 1);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (3, 3, 3, 5);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (4, 4, 4, 2);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (5, 5, 5, 4);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (6, 6, 6, 3);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (7, 7, 7, 1);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (8, 8, 8, 2);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (9, 9, 9, 3);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (10, 10, 10, 2);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (11, 1, 11, 2);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (12, 2, 12, 3);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (13, 3, 13, 4);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (14, 4, 14, 1);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (15, 5, 15, 3);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (16, 6, 16, 2);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (17, 7, 17, 3);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (18, 8, 18, 5);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (19, 9, 19, 2);
+INSERT INTO purchases_products (id, purchase_id, product_id, amount) 
+VALUES (20, 10, 20, 3);
+
+-- Таблица supplies_products
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (1, 1, 1, 50);
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (2, 2, 2, 30);
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (3, 3, 3, 40);
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (4, 4, 4, 25);
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (5, 5, 5, 60);
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (6, 6, 6, 35);
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (7, 7, 7, 20);
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (8, 8, 8, 50);
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (9, 9, 9, 45);
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (10, 10, 10, 55);
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (11, 2, 10, 50);
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (12, 4, 17, 30);
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (13, 6, 16, 50);
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (14, 7, 20, 20);
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (15, 8, 19, 30);
+INSERT INTO supplies_products (id, supply_id, product_id, amount) 
+VALUES (16, 9, 15, 20);
+
+-- Таблица vendors_products
+INSERT INTO vendors_products (id, vendor_id, product_id, amount) 
+VALUES (1, 1, 1, 60);
+INSERT INTO vendors_products (id, vendor_id, product_id, amount) 
+VALUES (2, 2, 2, 150);
+INSERT INTO vendors_products (id, vendor_id, product_id, amount) 
+VALUES (3, 3, 3, 100);
+INSERT INTO vendors_products (id, vendor_id, product_id, amount) 
+VALUES (4, 4, 4, 20);
+INSERT INTO vendors_products (id, vendor_id, product_id, amount) 
+VALUES (5, 5, 5, 200);
+INSERT INTO vendors_products (id, vendor_id, product_id, amount) 
+VALUES (6, 6, 6, 40);
+INSERT INTO vendors_products (id, vendor_id, product_id, amount) 
+VALUES (7, 7, 7, 20);
+INSERT INTO vendors_products (id, vendor_id, product_id, amount) 
+VALUES (8, 8, 8, 100);
+INSERT INTO vendors_products (id, vendor_id, product_id, amount) 
+VALUES (9, 9, 9, 60);
+INSERT INTO vendors_products (id, vendor_id, product_id, amount) 
+VALUES (10, 2, 10, 60);
+INSERT INTO vendors_products (id, vendor_id, product_id, amount) 
+VALUES (11, 10, 11, 30);
+INSERT INTO vendors_products (id, vendor_id, product_id, amount) 
+VALUES (12, 10, 12, 40);
+INSERT INTO vendors_products (id, vendor_id, product_id, amount) 
+VALUES (13, 9, 13, 100);
+INSERT INTO vendors_products (id, vendor_id, product_id, amount) 
+VALUES (14, 10, 14, 70);
+INSERT INTO vendors_products (id, vendor_id, product_id, amount) 
+VALUES (15, 9, 15, 50);
+
+-- Таблица stores_products
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (1, 1, 1, 200);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (2, 2, 2, 300);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (3, 3, 3, 150);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (4, 4, 4, 120);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (5, 5, 5, 60);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (6, 6, 6, 100);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (7, 7, 7, 120);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (8, 8, 8, 400);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (9, 9, 9, 150);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (10, 10, 10, 250);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (11, 1, 2, 30);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (12, 2, 3, 200);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (13, 3, 4, 100);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (14, 4, 1, 80);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (15, 5, 9, 100);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (16, 6, 12, 100);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (17, 7, 13, 100);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (18, 8, 15, 300);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (19, 9, 11, 200);
+INSERT INTO stores_products (id, store_id, product_id, count_in_stock) 
+VALUES (20, 10, 14, 100);
+
+-- Таблица supply_requests
+INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
+VALUES (1, TO_DATE('2024-12-13', 'YYYY-MM-DD'), 150, 1, 1);
+INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
+VALUES (2, TO_DATE('2024-12-14', 'YYYY-MM-DD'), 250, 2, 2);
+INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
+VALUES (3, TO_DATE('2024-12-15', 'YYYY-MM-DD'), 300, 3, 3);
+INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
+VALUES (4, TO_DATE('2024-12-16', 'YYYY-MM-DD'), 100, 4, 4);
+INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
+VALUES (5, TO_DATE('2024-12-17', 'YYYY-MM-DD'), 350, 5, 5);
+INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
+VALUES (6, TO_DATE('2024-12-18', 'YYYY-MM-DD'), 200, 6, 6);
+INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
+VALUES (7, TO_DATE('2024-12-19', 'YYYY-MM-DD'), 100, 7, 7);
+INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
+VALUES (8, TO_DATE('2024-12-20', 'YYYY-MM-DD'), 150, 8, 8);
+INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
+VALUES (9, TO_DATE('2024-12-21', 'YYYY-MM-DD'), 200, 9, 9);
+INSERT INTO supply_requests (id, created_date, product_count, stores_products_id, vendor_id) 
+VALUES (10, TO_DATE('2024-12-22', 'YYYY-MM-DD'), 150, 10, 10);

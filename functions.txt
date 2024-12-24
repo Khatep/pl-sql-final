@@ -1,0 +1,146 @@
+-- 1
+DECLARE
+    v_percentage NUMBER := 10; -- price will be increased by this percentage
+    v_category_id NUMBER := 2; -- id of category which products price will be increased
+    v_rows_updated NUMBER;
+
+    -- Function to increase product prices
+    FUNCTION increase price(p_percentage IN NUMBER, p_category_id IN NUMBER)
+    RETURN NUMBER
+    IS
+        v_count NUMBER;
+    BEGIN
+        UPDATE products
+        SET sale_price = sale_price + (sale_price * p_percentage / 100)
+        WHERE category_id = p_category_id;
+
+        v_count := SQL%ROWCOUNT;
+
+        RETURN v_count;
+    END increase_price;
+
+BEGIN
+    v_rows_updated := increase_price(v_percentage, v_category_id);
+
+    DBMS_OUTPUT.PUT_LINE('Number of products updated: ' || v_rows_updated);
+END;
+/
+
+
+-- 2
+CREATE OR REPLACE FUNCTION get_vendor_supplies
+RETURN SYS_REFCURSOR
+IS
+    result_cursor SYS_REFCURSOR;
+BEGIN
+    -- Cursor to fetch vendor names and their total supplies
+    OPEN result_cursor FOR
+        SELECT v.name AS vendor_name,
+               SUM(sp.amount) AS total_supplies
+        FROM vendors v
+        JOIN supplies s ON v.id = s.vendor_id
+        JOIN supplies_products sp ON s.id = sp.supply_id
+        GROUP BY v.name
+        ORDER BY v.name;
+
+    RETURN result_cursor;
+END get_vendor_supplies;
+/
+
+DECLARE
+    v_cursor SYS_REFCURSOR;
+    v_vendor_name VARCHAR2(255);
+    v_total_supplies NUMBER;
+BEGIN
+    -- Call the function
+    v_cursor := get_vendor_supplies;
+
+    -- Loop through the results
+    LOOP
+        FETCH v_cursor INTO v_vendor_name, v_total_supplies;
+        EXIT WHEN v_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('Vendor: ' || v_vendor_name || ', Total Supplies: ' || v_total_supplies);
+    END LOOP;
+
+    CLOSE v_cursor;
+END;
+/
+
+
+-- 3
+CREATE OR REPLACE FUNCTION calculate_discounted_order(
+    p_purchase_id INT
+) RETURN NUMBER IS
+    total_price NUMBER := 0;
+BEGIN
+    SELECT SUM(pp.amount * (p.sale_price * (1 - NVL(d.discount_percentage, 0) / 100)))
+    INTO total_price
+    FROM purchases_products pp
+    JOIN products p ON pp.product_id = p.id
+    LEFT JOIN discounts d ON p.id = d.product_id AND d.discount_end_date >= SYSDATE
+    WHERE pp.purchase_id = p_purchase_id;
+
+    RETURN NVL(total_price, 0);
+END;
+/
+
+DECLARE
+	result NUMBER;
+BEGIN
+	result := calculate_discounted_order(1);
+	DBMS_OUTPUT.PUT_LINE('Total price: ' || result);
+END;
+/
+
+-- 4
+CREATE OR REPLACE FUNCTION get_expiring_products(p_date IN DATE)
+RETURN SYS_REFCURSOR
+IS
+    result_cursor SYS_REFCURSOR;
+BEGIN
+    -- cursor to fetch products that will expire on or before the specified date
+    OPEN result_cursor FOR
+        SELECT name AS product_name,
+               description,
+               expiration_date,
+               sale_price
+        FROM products
+        WHERE expiration_date <= p_date
+        ORDER BY expiration_date;
+
+    RETURN result_cursor;
+END get_expiring_products;
+/
+
+DECLARE
+    v_cursor SYS_REFCURSOR;
+    v_product_name VARCHAR2(255);
+    v_description CLOB;
+    v_expiration_date DATE;
+    v_sale_price NUMBER;
+    v_expiry_date DATE := TO_DATE('2025-01-01', 'YYYY-MM-DD'); -- Example specific date
+BEGIN
+    -- Calling the function with a specific date
+    v_cursor := get_expiring_products(v_expiry_date);
+
+    -- Loop through the results
+    LOOP
+        FETCH v_cursor INTO v_product_name, v_description, v_expiration_date, v_sale_price;
+        EXIT WHEN v_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('Product: ' || v_product_name || 
+                             ', Description: ' || v_description || 
+                             ', Expiration Date: ' || TO_CHAR(v_expiration_date, 'YYYY-MM-DD') || 
+                             ', Sale Price: ' || v_sale_price);
+    END LOOP;
+
+    CLOSE v_cursor;
+END;
+/
+
+-- 5
+
+
+
+
+
+

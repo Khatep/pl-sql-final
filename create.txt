@@ -1,0 +1,178 @@
+CREATE TABLE categories --1
+(
+    id INT PRIMARY KEY, 
+    name VARCHAR(30) NOT NULL UNIQUE
+);
+
+CREATE TABLE vendors --2
+(
+    id INT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL, 
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone_number VARCHAR(30) NOT NULL,
+    bank_account VARCHAR(30) NOT NULL,
+    bin VARCHAR(30) NOT NULL UNIQUE
+);
+	
+CREATE TABLE manufacturers --3
+(
+    id INT PRIMARY KEY, 
+    name VARCHAR(30) NOT NULL, 
+    country VARCHAR(30)
+);
+
+CREATE TABLE products --4
+(
+    id INT PRIMARY KEY,
+    name VARCHAR2(255) NOT NULL,
+    description CLOB,
+    sale_price NUMBER,
+    vendor_price NUMBER NOT NULL,
+    weight NUMBER NOT NULL,
+    expiration_date DATE NOT NULL,
+    count_in_stock INT NOT NULL,
+    category_id INT,
+    vendor_id INT,
+    manufacturer_id INT,
+    CONSTRAINT fk_products_category FOREIGN KEY (category_id) REFERENCES categories(id),
+    CONSTRAINT fk_products_vendor FOREIGN KEY (vendor_id) REFERENCES vendors(id),
+    CONSTRAINT fk_products_manufacturer FOREIGN KEY (manufacturer_id) REFERENCES manufacturers(id)
+);
+
+CREATE TABLE store_types --5
+(
+    id INT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL UNIQUE
+);
+
+CREATE TABLE stores --6
+(
+    id INT PRIMARY KEY,  
+    address VARCHAR(255) UNIQUE, 
+    quantity_of_employers INT NOT NULL, 
+    phone_number VARCHAR(30) NOT NULL,
+    store_type_id INT,
+    CONSTRAINT fk_stores_store_type FOREIGN KEY (store_type_id) REFERENCES store_types(id)
+);
+
+CREATE TABLE positions --7
+(
+    id INT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL UNIQUE,
+    min_salary INT NOT NULL,
+    max_salary INT NOT NULL
+);
+
+CREATE TABLE employees --8
+(
+    id int PRIMARY KEY, 
+    first_name VARCHAR(30) NOT NULL, 
+    last_name VARCHAR(30) NOT NULL, 
+    salary NUMBER NOT NULL, 
+    phone_number VARCHAR(30) NOT NULL, 
+    email VARCHAR(255), 
+    position_id INT NOT NULL,
+    store_id INT,
+    CONSTRAINT fk_employees_position FOREIGN KEY (position_id) REFERENCES positions(id),
+    CONSTRAINT fk_employees_store FOREIGN KEY (store_id) REFERENCES stores(id)
+);
+
+CREATE TABLE discounts --9
+(
+    id INT PRIMARY KEY,
+    percentage INT CHECK (percentage < 100),
+    end_date DATE NOT NULL,
+    product_id INT,
+    CONSTRAINT fk_discounts_product FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+CREATE TABLE supplies --10
+(
+    id INT PRIMARY KEY, 
+    date_of_supply DATE NOT NULL, 
+    sum NUMBER NOT NULL,
+    vendor_id INT, 
+    store_id INT,
+    CONSTRAINT fk_supplies_vendor FOREIGN KEY (vendor_id) REFERENCES vendors(id),
+    CONSTRAINT fk_supplies_store FOREIGN KEY (store_id) REFERENCES stores(id)        
+);
+
+CREATE TABLE payment_methods --11
+(
+    id INT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL UNIQUE
+);
+
+CREATE TABLE purchases --12
+(
+    id INT PRIMARY KEY,  
+    final_price INT NOT NULL, 
+    date_of_purchase DATE NOT NULL,
+    store_id INT NOT NULL,
+    payment_method_id INT NOT NULL,
+    CONSTRAINT fk_purchases_store FOREIGN KEY (store_id) REFERENCES stores(id),
+    CONSTRAINT fk_purchases_payment_method FOREIGN KEY (payment_method_id) REFERENCES payment_methods(id)
+);
+
+CREATE TABLE deliveries --13
+(
+    id INT PRIMARY KEY, 
+    address VARCHAR(255) NOT NULL, 
+    cost INT NOT NULL,    
+    purchase_id INT,
+    employee_id INT,
+    CONSTRAINT fk_deliveries_purchase FOREIGN KEY (purchase_id) REFERENCES purchases(id),
+    CONSTRAINT fk_deliveries_employee FOREIGN KEY (employee_id) REFERENCES employees(id)
+);
+
+CREATE TABLE purchases_products --14
+(
+    id INT PRIMARY KEY, 
+    amount INT NOT NULL,
+    purchase_id INT,
+    product_id INT,
+    CONSTRAINT fk_purchases_products_purchase FOREIGN KEY (purchase_id) REFERENCES purchases(id),
+    CONSTRAINT fk_purchases_products_product FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+CREATE TABLE supplies_products --15
+(
+    id INT PRIMARY KEY,
+    amount INT NOT NULL,
+    supply_id INT,
+    product_id INT,
+    CONSTRAINT fk_supplies_products_supply FOREIGN KEY (supply_id) REFERENCES supplies(id),
+    CONSTRAINT fk_supplies_products_product FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+CREATE TABLE vendors_products --16
+(
+    id INT PRIMARY KEY,
+    amount INT NOT NULL,
+    vendor_id INT,
+    product_id INT,
+    CONSTRAINT fk_vendors_products_vendor FOREIGN KEY (vendor_id) REFERENCES vendors(id),
+    CONSTRAINT fk_vendors_products_product FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+
+CREATE TABLE stores_products --17 
+(
+    id INT PRIMARY KEY,
+    count_in_stock INT NOT NULL,
+    product_id INT,
+    store_id INT,
+    CONSTRAINT fk_stores_products_product FOREIGN KEY (product_id) REFERENCES products(id),
+    CONSTRAINT fk_stores_products_store FOREIGN KEY (store_id) REFERENCES stores(id)	
+);
+
+CREATE TABLE supply_requests --18
+(
+    id INT PRIMARY KEY,
+    created_date DATE NOT NULL,
+    product_count INT NOT NULL,
+    stores_products_id INT, 
+    vendor_id INT,
+    CONSTRAINT fk_stores_products_supply_requests FOREIGN KEY (stores_products_id) REFERENCES stores_products(id),
+    CONSTRAINT fk_supply_requests_vendor FOREIGN KEY (vendor_id) REFERENCES vendors(id)
+);
