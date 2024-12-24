@@ -14,4 +14,15 @@ VALUES (16, 'Azamat', 'Maratov', 8, 500000, '77000000016', 'a.maratov@mail.com',
 
 
 -- 4 trg_validate_discount
+-- Error: Percentage too high
+INSERT INTO discounts (id, product_id, percentage, end_date) 
+VALUES (12, 1, 80, TO_DATE('2025-12-31', 'YYYY-MM-DD'));
+
+-- Error: End date in the past
+INSERT INTO discounts (id, product_id, percentage, end_date) 
+VALUES (13, 1, 20, TO_DATE('2023-01-01', 'YYYY-MM-DD'));
+
+-- Error: Product ID doesn't exist
+INSERT INTO discounts (id, product_id, percentage, end_date) 
+VALUES (14, 999, 20, TO_DATE('2025-12-31', 'YYYY-MM-DD')); 
 
