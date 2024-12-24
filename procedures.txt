@@ -1,0 +1,194 @@
+-- 1
+CREATE OR REPLACE PROCEDURE increase_salary_by_position( 
+    p_position_id IN INT, 
+    p_percentage IN NUMBER 
+) AS 
+    v_rows_updated NUMBER; 
+BEGIN 
+    -- Updating the salaries of employees with the specified position ID 
+    UPDATE employees 
+    SET salary = salary + (salary * p_percentage / 100) 
+    WHERE position_id = p_position_id; 
+ 
+    -- Capturing number of rows updated 
+    v_rows_updated := SQL%ROWCOUNT; 
+ 
+    -- Outputing the result 
+    DBMS_OUTPUT.PUT_LINE('Number of employees updated: ' || v_rows_updated); 
+EXCEPTION 
+    WHEN OTHERS THEN 
+        DBMS_OUTPUT.PUT_LINE('An error occurred: ' || SQLERRM); 
+END increase_salary_by_position; 
+/
+
+BEGIN
+    increase_salary_by_position(1, 10); -- Increase salaries of position ID 1 by 10%
+END;
+/
+
+
+-- 2
+CREATE OR REPLACE PROCEDURE show_total_product_sales IS
+    CURSOR sales_cursor IS
+        SELECT p.id AS product_id,
+               p.name AS product_name,
+               SUM(pp.amount * p.sale_price) AS total_sales
+        FROM purchases_products pp
+        JOIN products p ON pp.product_id = p.id
+        GROUP BY p.id, p.name
+        ORDER BY total_sales DESC;
+
+    v_product_id products.id%TYPE;
+    v_product_name products.name%TYPE;
+    v_total_sales NUMBER;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Product ID | Product Name       | Total Sales');
+    DBMS_OUTPUT.PUT_LINE('---------------------------------------------');
+
+    -- Iterating over the cursor and output the sales details
+    FOR rec IN sales_cursor LOOP
+        v_product_id := rec.product_id;
+        v_product_name := rec.product_name;
+        v_total_sales := rec.total_sales;
+
+        DBMS_OUTPUT.PUT_LINE(
+            LPAD(v_product_id, 10) || ' | ' || 
+            RPAD(v_product_name, 20) || ' | ' ||
+            TO_CHAR(v_total_sales, '999,999.00')
+        );
+    END LOOP;
+END show_total_product_sales;
+/
+
+
+BEGIN
+    show_total_sales;
+END;
+/
+
+-- 3
+CREATE OR REPLACE PROCEDURE get_store_revenue(
+    start_date IN DATE,
+    end_date IN DATE
+)
+AS
+BEGIN
+    -- Check the correctness of the input parameters
+    IF start_date > end_date THEN
+        RAISE_APPLICATION_ERROR(-20001, 'The start date cannot be greater than the end date.');
+    END IF;
+
+    -- Display the title
+	DBMS_OUTPUT.PUT_LINE('Period: ' || TO_CHAR(start_date, 'YYYY-MM-DD') || ' - ' || TO_CHAR(end_date, 'YYYY-MM-DD'));
+    DBMS_OUTPUT.PUT_LINE('Store ID   | Total Revenue');
+    DBMS_OUTPUT.PUT_LINE('--------------------------');
+
+    -- Iteration based on the query results
+    FOR rec IN (
+        SELECT 
+            store_id,
+            SUM(final_price) AS total_revenue
+        FROM 
+            purchases
+        WHERE 
+            date_of_purchase BETWEEN start_date AND end_date
+        GROUP BY 
+            store_id
+        ORDER BY 
+            store_id 
+    )
+    LOOP
+        DBMS_OUTPUT.PUT_LINE(
+            LPAD(rec.store_id, 10) || ' | ' ||
+            TO_CHAR(rec.total_revenue, '999,999,999.00')
+        );
+    END LOOP;
+END;
+/
+
+BEGIN
+    get_store_revenue(TO_DATE('2024-10-01', 'YYYY-MM-DD'), TO_DATE('2024-12-31', 'YYYY-MM-DD'));
+END;
+/
+
+-- 4
+CREATE OR REPLACE PROCEDURE show_delivery_earnings IS
+    CURSOR earnings_cursor IS
+        SELECT e.id AS employee_id,
+               e.first_name || ' ' || e.last_name AS employee_name,
+               SUM(d.cost) AS total_earnings
+        FROM deliveries d
+        JOIN employees e ON d.employee_id = e.id
+        GROUP BY e.id, e.first_name, e.last_name
+        ORDER BY total_earnings DESC;
+
+    v_employee_id employees.id%TYPE;
+    v_employee_name employees.first_name%TYPE;
+    v_total_earnings NUMBER;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Employee ID | Employee Name          | Total Earnings');
+    DBMS_OUTPUT.PUT_LINE('-----------------------------------------------------');
+
+    -- Iterating over the cursor to display the results
+    FOR rec IN earnings_cursor LOOP
+        v_employee_id := rec.employee_id;
+        v_employee_name := rec.employee_name;
+        v_total_earnings := rec.total_earnings;
+
+        DBMS_OUTPUT.PUT_LINE(
+            LPAD(v_employee_id, 12) || ' | ' ||
+            RPAD(v_employee_name, 22) || ' | ' ||
+            TO_CHAR(v_total_earnings, '999,999.00')
+        );
+    END LOOP;
+END show_delivery_earnings;
+/
+
+BEGIN
+    show_delivery_earnings;
+END;
+/
+
+-- 5
+CREATE OR REPLACE PROCEDURE recommend_discount_products(
+    p_threshold INT -- минимальное количество продаж
+)
+AS
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Product ID | Product Name       | Sales Count | Expiration Date');
+    DBMS_OUTPUT.PUT_LINE('-------------------------------------------------------------');
+
+    FOR rec IN (
+        SELECT 
+            p.id AS product_id,
+            p.name AS product_name,
+            COUNT(pp.id) AS sales_count,
+            p.expiration_date
+        FROM 
+            products p
+        LEFT JOIN purchases_products pp ON p.id = pp.product_id
+        GROUP BY 
+            p.id, p.name, p.expiration_date
+        HAVING 
+            COUNT(pp.id) < p_threshold
+        ORDER BY 
+            p.expiration_date ASC
+    )
+    LOOP
+        DBMS_OUTPUT.PUT_LINE(
+            LPAD(rec.product_id, 10) || ' | ' ||
+            RPAD(rec.product_name, 20) || ' | ' ||
+            LPAD(rec.sales_count, 12) || ' | ' ||
+            TO_CHAR(rec.expiration_date, 'YYYY-MM-DD')
+        );
+    END LOOP;
+END;
+/
+
+BEGIN
+    recommend_discount_products(10);
+END;
+/
+
+
+

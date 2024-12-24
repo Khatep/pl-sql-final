@@ -155,7 +155,6 @@ CREATE TABLE vendors_products --16
     CONSTRAINT fk_vendors_products_product FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
-
 CREATE TABLE stores_products --17 
 (
     id INT PRIMARY KEY,
